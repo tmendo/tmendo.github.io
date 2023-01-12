@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>upload &#8211; Secure Batatas</title>
+	<atom:link href="/tag/upload/feed/?simply_static_page=98" rel="self" type="application/rss+xml" />
+	<link>/</link>
+	<description>Batatas is my foobar. Security.</description>
+	<lastBuildDate>Wed, 02 Sep 2015 21:02:01 +0000</lastBuildDate>
+	<language>en-US</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=</generator>
+	<item>
+		<title>Testing uploads with Burp Intruder &#8211; Updated</title>
+		<link>/testing-uploads-with-burp-intruder-updated/</link>
+					<comments>/testing-uploads-with-burp-intruder-updated/#respond</comments>
+		
+		<dc:creator><![CDATA[tmendo]]></dc:creator>
+		<pubDate>Tue, 01 Sep 2015 10:28:27 +0000</pubDate>
+				<category><![CDATA[burp]]></category>
+		<category><![CDATA[extension]]></category>
+		<category><![CDATA[web security]]></category>
+		<category><![CDATA[file]]></category>
+		<category><![CDATA[payload]]></category>
+		<category><![CDATA[upload]]></category>
+		<guid isPermaLink="false">/?p=268</guid>
+
+					<description><![CDATA[Just updated my Intruder extension (described here) to provide two payload generators: the original one with the file contents and another one with the matching file name. So, if you need both the content and file name in your Intruder attack, choose Pitchfork as the Attack type and use File as Payload for one Payload [&#8230;]]]></description>
+										<content:encoded><![CDATA[<p>Just updated my Intruder extension (described <a href="/?p=250">here</a>) to provide two payload generators: the original one with the file contents and another one with the matching file name.</p>
+<p>So, if you need both the content and file name in your Intruder attack, choose Pitchfork as the Attack type and use File as Payload for one Payload set and Filename as Payload for the other.</p>
+<p>With this update you can synchronize the file name and its contents in the attack without much hassle, something that was not trivial in the previous version. </p>
+]]></content:encoded>
+					
+					<wfw:commentRss>/testing-uploads-with-burp-intruder-updated/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>Testing uploads with Burp Intruder</title>
+		<link>/testing-uploads-with-burp-intruder/</link>
+					<comments>/testing-uploads-with-burp-intruder/#respond</comments>
+		
+		<dc:creator><![CDATA[tmendo]]></dc:creator>
+		<pubDate>Sat, 22 Aug 2015 01:29:56 +0000</pubDate>
+				<category><![CDATA[burp]]></category>
+		<category><![CDATA[extension]]></category>
+		<category><![CDATA[web security]]></category>
+		<category><![CDATA[bapp store]]></category>
+		<category><![CDATA[file]]></category>
+		<category><![CDATA[intruder]]></category>
+		<category><![CDATA[payload]]></category>
+		<category><![CDATA[upload]]></category>
+		<guid isPermaLink="false">/?p=250</guid>
+
+					<description><![CDATA[While testing an file upload functionality with Burp&#8217;s Repeater I noticed the site response changed depending on the file being uploaded, which is normal if the server is validating the file headers. After a few requests with different responses I got tired of doing this manually and decided to use Burp&#8217;s Intruder feature. I quickly [&#8230;]]]></description>
+										<content:encoded><![CDATA[<p>While testing an file upload functionality with Burp&#8217;s Repeater I noticed the site response changed depending on the file being uploaded, which is normal if the server is validating the file headers.<br />
+After a few requests with different responses I got tired of doing this manually and decided to use Burp&#8217;s Intruder feature. I quickly noticed that there is no way of telling the Intruder to inject the contents of a list of files in the request.</p>
+<p>So I wrote an extension that reads a folder files and feeds their content, one at a time, as a payload to use in the Intruder.<br />
+Suppose you have a folder with your best malicious files, zip and xml bombs, jpegs with other contents, php shells, etc. You point the extension to this folder and just use the Repeater normally, setting the payload source as being this extension.<br />
+If you need/want to synchronize the file contents with the file name, the extension tab shows the names of the files it just read so you can use them as payload for a second position in the request, using the pitchfork attack.  </p>
+<blockquote><p><code><strong>EDIT</strong></code><br />
+There is a new version of the extension that provides two generators, one for the file name and other for the file contents, easing this synchronization process. See <a href="/?p=268">this</a> update post.
+</p></blockquote>
+<div id="attachment_258" style="width: 1065px" class="wp-caption alignnone"><a href="/wp-content/uploads/2015/08/BurpIntruderFilePayload.png"><img aria-describedby="caption-attachment-258" decoding="async" src="/wp-content/uploads/2015/08/BurpIntruderFilePayload.png" alt="Burp Intruder File Payload Extension tab" width="1055" height="449" class="size-full wp-image-258" /></a><p id="caption-attachment-258" class="wp-caption-text">Choosing the input files</p></div>
+<div id="attachment_262" style="width: 562px" class="wp-caption alignnone"><a href="/wp-content/uploads/2015/08/BurpIntruderFilePayload2.png"><img aria-describedby="caption-attachment-262" decoding="async" loading="lazy" src="/wp-content/uploads/2015/08/BurpIntruderFilePayload2.png" alt="Configuring the Intruder" width="552" height="339" class="size-full wp-image-262" /></a><p id="caption-attachment-262" class="wp-caption-text">Configuring the Intruder</p></div>
+<p>The extension is available <a href="https://github.com/tmendo/BurpIntruderFilePayloadGenerator/raw/master/dist/IntruderFilePayloadGenerator.jar">here</a> as a single jar. The code is available <a href="https://github.com/tmendo/BurpIntruderFilePayloadGenerator" target="_blank">here</a>.<br />
+I have submitted it to the BApp Store but it hasn&#8217;t been approved yet.</p>
+<blockquote><p><code><strong>EDIT</strong></code><br />
+Now available at the BApp Store, <a href="https://portswigger.net/bappstore/ShowBappDetails.aspx?uuid=880cf2cf689b4067afd9db8e2aefb8ba" target="_blank">here</a> :)
+</p></blockquote>
+<p>Enjoy.</p>
+]]></content:encoded>
+					
+					<wfw:commentRss>/testing-uploads-with-burp-intruder/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+	</channel>
+</rss>

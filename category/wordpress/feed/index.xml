@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>wordpress &#8211; Secure Batatas</title>
+	<atom:link href="/category/wordpress/feed/?simply_static_page=170" rel="self" type="application/rss+xml" />
+	<link>/</link>
+	<description>Batatas is my foobar. Security.</description>
+	<lastBuildDate>Sat, 07 Mar 2015 22:24:55 +0000</lastBuildDate>
+	<language>en-US</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=</generator>
+	<item>
+		<title>Hardening WordPress</title>
+		<link>/hardening-wordpress/</link>
+					<comments>/hardening-wordpress/#respond</comments>
+		
+		<dc:creator><![CDATA[tmendo]]></dc:creator>
+		<pubDate>Sat, 03 Jan 2015 18:56:19 +0000</pubDate>
+				<category><![CDATA[hardening]]></category>
+		<category><![CDATA[web security]]></category>
+		<category><![CDATA[wordpress]]></category>
+		<guid isPermaLink="false">/?p=27</guid>
+
+					<description><![CDATA[I think it makes sense that the very first post on my brand new WordPress blog would be about hardening WordPress itself. This makes even more sense if you consider it took me more time to harden this blog than to write this post. For the installation just follow the official documentation found here to [&#8230;]]]></description>
+										<content:encoded><![CDATA[<p>I think it makes sense that the very first post on my brand new WordPress blog would be about hardening WordPress itself. This makes even more sense if you consider it took me more time to harden this blog than to write this post.</p>
+<p>For the installation just follow the official documentation found <a href="http://codex.wordpress.org/Installing_WordPress">here</a> to which I just want to make one remark about the database password strength: </p>
+<p><code>GRANT ALL PRIVILEGES ON databasename.* TO "wordpressusername"@"hostname" IDENTIFIED BY "password";</code></p>
+<p>Use a long password here, something like ﻿sK8ytB8mR5PtxqqTmCEYThEUJS5J6D which is 30 chars long. You won&#8217;t need to type this password often so there is no need to use a memorable one.<br />
+To be honest, a weak password here wouldn&#8217;t be that bad since it is unlikely that you server will fall because of this&#8230;unless you expose it beyond 127.0.0.1.</p>
+<p>For the hardening, start <a href="http://codex.wordpress.org/Hardening_WordPress">here</a>. There is some smalltalk but there are also some good advices regarding a few topics:    </p>
+<ul>
+<li>updates</li>
+<li>file permissions</li>
+<li>wp-admin</li>
+<li>wp-includes</li>
+<li>security plugins</li>
+</ul>
+<p><strong>updates</strong><br />
+Keeping your installation up to date is paramount to ensure proper security. Before version 3.7 updates really sucked because the easiest way to (automatically) update was to have all files writable by the webserver process, so basically any malicious code executed by the webserver would be able to overwrite any file from our installation. The alternative was more secure but harder, so people wouldn&#8217;t update.<br />
+In the latest versions there is some magic that let you have automatic updates without the need to have files writable by the webserver. I think there is more than one way to achieve this: I went for the SSH one.<br />
+I followed this <a href="https://www.digitalocean.com/community/tutorials/how-to-configure-secure-updates-and-installations-in-wordpress-on-ubuntu">tutorial</a>. In addition to the 5 defines added to the wp-config.php file, I also added <code>define('FS_METHOD', 'ssh2');</code>.<br />
+Since we are adding a new SSH user and we don&#8217;t want to increase your attack surface, disable password authentication for SSH at /etc/ssh/sshd_config with <code>PasswordAuthentication no</code>. Well&#8230;you should always disable password authentication for SSH. </p>
+<p><strong>file permissions</strong><br />
+The important thing here is to prevent the webserver from writing files. There are some exceptions, as you might want to allow functionality such as image upload (so I can haz pretty potatoes pic).<br />
+You can have all files with owner and group wp-user, everything with 644 (files) or 755 (diretories).<br />
+The exception is wp-content/uploads that must be writable by the group (775) and have the group www-data set. You don&#8217;t need to allow webserver writing for the others since updates and installations are done through SSH and run with wp-user.</p>
+<p><strong>wp-admin</strong><br />
+/wp-admin is a prime target for attackers because that is where you login to administrate your blog with your admin username and your weak password :)<br />
+Leaving /wp-admin world accessible exposes you to two problems: credential bruteforce/reuse/theft and direct access to files that may have all sort of vulnerabilities.<br />
+The most practical way to protect you from these is require some sort of authentication, say basic authentication. With nginx you just need to add this to your virtual host<br />
+<code><br />
+        location = /wp-admin {<br />
+                auth_basic "Restricted";<br />
+                auth_basic_user_file /path/to/your/htpasswd;<br />
+        }</code></p>
+<p>and define the username and password. Please use a strong password here and also for your /wp-admin accounts.</p>
+<blockquote><p><code><strong>EDIT</strong></code><br />
+Also protect the /wp-login.php since it is used to login to edit the blog.<br />
+I include the snippet below to demonstrate the care you must take with nginx locations while configuring the rules described in this blog. Without going into details, prefix matching has precedence over regexp matching and nested locations with regex must have only regex inside.<br />
+<code> location = /wp-admin {<br />
+                auth_basic "Restricted";<br />
+                auth_basic_user_file /etc/nginx/htpasswd;<br />
+        }</p>
+<p>        location ~ \.php$ {<br />
+                location ~* /wp-login.php {<br />
+                        auth_basic "Restricted login";<br />
+                        auth_basic_user_file /etc/nginx/htpasswd;<br />
+                }</p>
+<p>                location ~* wp-config.php {<br />
+                        deny all;<br />
+                }<br />
+</code></p></blockquote>
+<p><strong>security plugins</strong><br />
+Having many plugins installed is asking for trouble since many have vulnerabilities and don&#8217;t even get fixed. So, going against the usual recommendation of not installing plugins, install the Sucuri Security &#8211; Auditing, Malware Scanner and Hardening plugin.<br />
+After installing, you get a Sucuri Security button on your dashboard side menu that lets you access the plugin dashboard<br />
+<a href="/wp-content/uploads/2015/01/Screen-Shot-2015-01-03-at-17.48.34.png"><img decoding="async" loading="lazy" src="/wp-content/uploads/2015/01/Screen-Shot-2015-01-03-at-17.48.34.png" alt="Sucuri Security menu" width="880" height="238" class="alignnone size-full wp-image-55" /></a></p>
+<p>Some of the features are paid, but you get a few nice things for free. In the hardening tab you can verify if have the proper secure configurations, however some only work if you are using Apache. More specifically, &#8220;Protect uploads directory&#8221;, &#8220;Restrict wp-content access&#8221; and &#8220;Restrict wp-includes access&#8221; will remain red under nginx even if properly configured, because the plugin expects Apache specific configuration.<br />
+In the Settings tab you have another interesting feature: the scanner. The plugin can scan your wordpress installation for changes and notify you by email, like an HIDS. Go through the Settings tabs and activate/deactivate options as you please.</p>
+<p>Additionally to the 5 previous topics, I recommend following this extra 2:</p>
+<p><strong>Delete themes</strong><br />
+Regarding themes&#8230;you just use one so delete those you don&#8217;t use, as well as the pre-installed useless plugin <a href="https://wordpress.org/plugins/hello-dolly/">Hello Dolly</a>.</p>
+<p><strong>Limit PHP execution</strong><br />
+Direct access to PHP files laying around in your installation are known to cause problem, so disable PHP execution wherever you can. If using nginx add the configuration below to your virtual host. For Apache just use the Sucuri plugin or use Google.</p>
+<p>       <code> location ~* wp-config.php {<br />
+                deny all;<br />
+        }</p>
+<p>        location ~* wp-content/(.*)\.php$ {<br />
+                deny all;<br />
+        }</p>
+<p>        location ~* wp-includes/(.*)\.php$ {<br />
+                deny all;<br />
+        }</p>
+<p>        location ~* wp-includes/uploads/sucuri$ {<br />
+                deny all;<br />
+        }</code></p>
+<p>And finally&#8230;<strong>HTTPS</strong><br />
+I don&#8217; need extra motivation to make my blog available only by HTTPS but you if you are thinking twice, just remember Google favors HTTPS sites in the search results and you can get certificates for free from <a href="https://www.startssl.com/">StartSSL</a>, for instance.<br />
+Configuring HTTPS for WordPress is just like doing it for any another virtual host. Just remember a few things:</p>
+<ul>
+<li>change your site from http://example.com/ to http<strong>s</strong>://example.com at Settings->General->WordPress Address and Site Address</li>
+<li>force a 301 redirect from HTTP to HTTPS</li>
+<li>send a HSTS header to ensure you are always under HTTPS</li>
+<li>disable all SSL versions and enable only TLS</li>
+<li>enable strong ciphers such as <code>ECDHE-RSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-SHA256:ECDHE-RSA-RC4-SHA:RC4:HIGH:!MD5:!aNULL:!EDH</code></li>
+<li>enable server cipher preference</li>
+</ul>
+<p>Then, go to <a href="https://www.ssllabs.com/ssltest/">SSL Labs</a> and test your configuration.</p>
+<p>If you are paranoid, you can continue hardening your WordPress, webserver, PHP, and OS forever, but you have to balance that against the time you have available.</p>
+<p>So..I guess I have an WordPress blog. Lets see how long it holds without being hacked&#8230;</p>
+]]></content:encoded>
+					
+					<wfw:commentRss>/hardening-wordpress/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+	</channel>
+</rss>

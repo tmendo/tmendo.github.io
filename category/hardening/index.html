@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<!--[if IE 7]>
+<html class="ie ie7" lang="en-US">
+<![endif]--><!--[if IE 8]>
+<html class="ie ie8" lang="en-US">
+<![endif]--><!--[if !(IE 7) & !(IE 8)]><!--><html lang="en-US">
+<!--<![endif]-->
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<title>hardening | Secure Batatas</title>
+<link rel="profile" href="https://gmpg.org/xfn/11">
+<link rel="pingback" href="/xmlrpc.php">
+<!--[if lt IE 9]>
+<script src="https://mendo.pt/wp-content/themes/twentytwelve/js/html5.js?ver=3.7.0" type="text/javascript"></script>
+<![endif]-->
+<meta name="robots" content="max-image-preview:large">
+<link rel="dns-prefetch" href="//fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com/">
+<link rel="alternate" type="application/rss+xml" title="Secure Batatas &raquo; Feed" href="/feed/">
+<link rel="alternate" type="application/rss+xml" title="Secure Batatas &raquo; Comments Feed" href="/comments/feed/">
+<link rel="alternate" type="application/rss+xml" title="Secure Batatas &raquo; hardening Category Feed" href="/category/hardening/feed/">
+<script type="text/javascript">
+window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/14.0.0\/72x72\/","ext":".png","svgUrl":"https:\/\/s.w.org\/images\/core\/emoji\/14.0.0\/svg\/","svgExt":".svg","source":{"concatemoji":"httpsmendo.pt\/wp-includes\/js\/wp-emoji-release.min.js?ver="}};
+/*! This file is auto-generated */
+!function(e,a,t){var n,r,o,i=a.createElement("canvas"),p=i.getContext&&i.getContext("2d");function s(e,t){var a=String.fromCharCode,e=(p.clearRect(0,0,i.width,i.height),p.fillText(a.apply(this,e),0,0),i.toDataURL());return p.clearRect(0,0,i.width,i.height),p.fillText(a.apply(this,t),0,0),e===i.toDataURL()}function c(e){var t=a.createElement("script");t.src=e,t.defer=t.type="text/javascript",a.getElementsByTagName("head")[0].appendChild(t)}for(o=Array("flag","emoji"),t.supports={everything:!0,everythingExceptFlag:!0},r=0;r<o.length;r++)t.supports[o[r]]=function(e){if(p&&p.fillText)switch(p.textBaseline="top",p.font="600 32px Arial",e){case"flag":return s([127987,65039,8205,9895,65039],[127987,65039,8203,9895,65039])?!1:!s([55356,56826,55356,56819],[55356,56826,8203,55356,56819])&&!s([55356,57332,56128,56423,56128,56418,56128,56421,56128,56430,56128,56423,56128,56447],[55356,57332,8203,56128,56423,8203,56128,56418,8203,56128,56421,8203,56128,56430,8203,56128,56423,8203,56128,56447]);case"emoji":return!s([129777,127995,8205,129778,127999],[129777,127995,8203,129778,127999])}return!1}(o[r]),t.supports.everything=t.supports.everything&&t.supports[o[r]],"flag"!==o[r]&&(t.supports.everythingExceptFlag=t.supports.everythingExceptFlag&&t.supports[o[r]]);t.supports.everythingExceptFlag=t.supports.everythingExceptFlag&&!t.supports.flag,t.DOMReady=!1,t.readyCallback=function(){t.DOMReady=!0},t.supports.everything||(n=function(){t.readyCallback()},a.addEventListener?(a.addEventListener("DOMContentLoaded",n,!1),e.addEventListener("load",n,!1)):(e.attachEvent("onload",n),a.attachEvent("onreadystatechange",function(){"complete"===a.readyState&&t.readyCallback()})),(e=t.source||{}).concatemoji?c(e.concatemoji):e.wpemoji&&e.twemoji&&(c(e.twemoji),c(e.wpemoji)))}(window,document,window._wpemojiSettings);
+</script>
+<style type="text/css">img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 0.07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}</style>
+	<link rel="stylesheet" id="wp-block-library-css" href="/wp-includes/css/dist/block-library/style.min.css" type="text/css" media="all">
+<style id="wp-block-library-theme-inline-css" type="text/css">.wp-block-audio figcaption{color:#555;font-size:13px;text-align:center}.is-dark-theme .wp-block-audio figcaption{color:hsla(0,0%,100%,.65)}.wp-block-audio{margin:0 0 1em}.wp-block-code{border:1px solid #ccc;border-radius:4px;font-family:Menlo,Consolas,monaco,monospace;padding:.8em 1em}.wp-block-embed figcaption{color:#555;font-size:13px;text-align:center}.is-dark-theme .wp-block-embed figcaption{color:hsla(0,0%,100%,.65)}.wp-block-embed{margin:0 0 1em}.blocks-gallery-caption{color:#555;font-size:13px;text-align:center}.is-dark-theme .blocks-gallery-caption{color:hsla(0,0%,100%,.65)}.wp-block-image figcaption{color:#555;font-size:13px;text-align:center}.is-dark-theme .wp-block-image figcaption{color:hsla(0,0%,100%,.65)}.wp-block-image{margin:0 0 1em}.wp-block-pullquote{border-top:4px solid;border-bottom:4px solid;margin-bottom:1.75em;color:currentColor}.wp-block-pullquote__citation,.wp-block-pullquote cite,.wp-block-pullquote footer{color:currentColor;text-transform:uppercase;font-size:.8125em;font-style:normal}.wp-block-quote{border-left:.25em solid;margin:0 0 1.75em;padding-left:1em}.wp-block-quote cite,.wp-block-quote footer{color:currentColor;font-size:.8125em;position:relative;font-style:normal}.wp-block-quote.has-text-align-right{border-left:none;border-right:.25em solid;padding-left:0;padding-right:1em}.wp-block-quote.has-text-align-center{border:none;padding-left:0}.wp-block-quote.is-large,.wp-block-quote.is-style-large,.wp-block-quote.is-style-plain{border:none}.wp-block-search .wp-block-search__label{font-weight:700}.wp-block-search__button{border:1px solid #ccc;padding:.375em .625em}:where(.wp-block-group.has-background){padding:1.25em 2.375em}.wp-block-separator.has-css-opacity{opacity:.4}.wp-block-separator{border:none;border-bottom:2px solid;margin-left:auto;margin-right:auto}.wp-block-separator.has-alpha-channel-opacity{opacity:1}.wp-block-separator:not(.is-style-wide):not(.is-style-dots){width:100px}.wp-block-separator.has-background:not(.is-style-dots){border-bottom:none;height:1px}.wp-block-separator.has-background:not(.is-style-wide):not(.is-style-dots){height:2px}.wp-block-table{margin:"0 0 1em 0"}.wp-block-table thead{border-bottom:3px solid}.wp-block-table tfoot{border-top:3px solid}.wp-block-table td,.wp-block-table th{word-break:normal}.wp-block-table figcaption{color:#555;font-size:13px;text-align:center}.is-dark-theme .wp-block-table figcaption{color:hsla(0,0%,100%,.65)}.wp-block-video figcaption{color:#555;font-size:13px;text-align:center}.is-dark-theme .wp-block-video figcaption{color:hsla(0,0%,100%,.65)}.wp-block-video{margin:0 0 1em}.wp-block-template-part.has-background{padding:1.25em 2.375em;margin-top:0;margin-bottom:0}</style>
+<link rel="stylesheet" id="classic-theme-styles-css" href="/wp-includes/css/classic-themes.min.css?ver=1" type="text/css" media="all">
+<style id="global-styles-inline-css" type="text/css">body{--wp--preset--color--black: #000000;--wp--preset--color--cyan-bluish-gray: #abb8c3;--wp--preset--color--white: #fff;--wp--preset--color--pale-pink: #f78da7;--wp--preset--color--vivid-red: #cf2e2e;--wp--preset--color--luminous-vivid-orange: #ff6900;--wp--preset--color--luminous-vivid-amber: #fcb900;--wp--preset--color--light-green-cyan: #7bdcb5;--wp--preset--color--vivid-green-cyan: #00d084;--wp--preset--color--pale-cyan-blue: #8ed1fc;--wp--preset--color--vivid-cyan-blue: #0693e3;--wp--preset--color--vivid-purple: #9b51e0;--wp--preset--color--blue: #21759b;--wp--preset--color--dark-gray: #444;--wp--preset--color--medium-gray: #9f9f9f;--wp--preset--color--light-gray: #e6e6e6;--wp--preset--gradient--vivid-cyan-blue-to-vivid-purple: linear-gradient(135deg,rgba(6,147,227,1) 0%,rgb(155,81,224) 100%);--wp--preset--gradient--light-green-cyan-to-vivid-green-cyan: linear-gradient(135deg,rgb(122,220,180) 0%,rgb(0,208,130) 100%);--wp--preset--gradient--luminous-vivid-amber-to-luminous-vivid-orange: linear-gradient(135deg,rgba(252,185,0,1) 0%,rgba(255,105,0,1) 100%);--wp--preset--gradient--luminous-vivid-orange-to-vivid-red: linear-gradient(135deg,rgba(255,105,0,1) 0%,rgb(207,46,46) 100%);--wp--preset--gradient--very-light-gray-to-cyan-bluish-gray: linear-gradient(135deg,rgb(238,238,238) 0%,rgb(169,184,195) 100%);--wp--preset--gradient--cool-to-warm-spectrum: linear-gradient(135deg,rgb(74,234,220) 0%,rgb(151,120,209) 20%,rgb(207,42,186) 40%,rgb(238,44,130) 60%,rgb(251,105,98) 80%,rgb(254,248,76) 100%);--wp--preset--gradient--blush-light-purple: linear-gradient(135deg,rgb(255,206,236) 0%,rgb(152,150,240) 100%);--wp--preset--gradient--blush-bordeaux: linear-gradient(135deg,rgb(254,205,165) 0%,rgb(254,45,45) 50%,rgb(107,0,62) 100%);--wp--preset--gradient--luminous-dusk: linear-gradient(135deg,rgb(255,203,112) 0%,rgb(199,81,192) 50%,rgb(65,88,208) 100%);--wp--preset--gradient--pale-ocean: linear-gradient(135deg,rgb(255,245,203) 0%,rgb(182,227,212) 50%,rgb(51,167,181) 100%);--wp--preset--gradient--electric-grass: linear-gradient(135deg,rgb(202,248,128) 0%,rgb(113,206,126) 100%);--wp--preset--gradient--midnight: linear-gradient(135deg,rgb(2,3,129) 0%,rgb(40,116,252) 100%);--wp--preset--duotone--dark-grayscale: url('#wp-duotone-dark-grayscale');--wp--preset--duotone--grayscale: url('#wp-duotone-grayscale');--wp--preset--duotone--purple-yellow: url('#wp-duotone-purple-yellow');--wp--preset--duotone--blue-red: url('#wp-duotone-blue-red');--wp--preset--duotone--midnight: url('#wp-duotone-midnight');--wp--preset--duotone--magenta-yellow: url('#wp-duotone-magenta-yellow');--wp--preset--duotone--purple-green: url('#wp-duotone-purple-green');--wp--preset--duotone--blue-orange: url('#wp-duotone-blue-orange');--wp--preset--font-size--small: 13px;--wp--preset--font-size--medium: 20px;--wp--preset--font-size--large: 36px;--wp--preset--font-size--x-large: 42px;--wp--preset--spacing--20: 0.44rem;--wp--preset--spacing--30: 0.67rem;--wp--preset--spacing--40: 1rem;--wp--preset--spacing--50: 1.5rem;--wp--preset--spacing--60: 2.25rem;--wp--preset--spacing--70: 3.38rem;--wp--preset--spacing--80: 5.06rem;}:where(.is-layout-flex){gap: 0.5em;}body .is-layout-flow > .alignleft{float: left;margin-inline-start: 0;margin-inline-end: 2em;}body .is-layout-flow > .alignright{float: right;margin-inline-start: 2em;margin-inline-end: 0;}body .is-layout-flow > .aligncenter{margin-left: auto !important;margin-right: auto !important;}body .is-layout-constrained > .alignleft{float: left;margin-inline-start: 0;margin-inline-end: 2em;}body .is-layout-constrained > .alignright{float: right;margin-inline-start: 2em;margin-inline-end: 0;}body .is-layout-constrained > .aligncenter{margin-left: auto !important;margin-right: auto !important;}body .is-layout-constrained > :where(:not(.alignleft):not(.alignright):not(.alignfull)){max-width: var(--wp--style--global--content-size);margin-left: auto !important;margin-right: auto !important;}body .is-layout-constrained > .alignwide{max-width: var(--wp--style--global--wide-size);}body .is-layout-flex{display: flex;}body .is-layout-flex{flex-wrap: wrap;align-items: center;}body .is-layout-flex > *{margin: 0;}:where(.wp-block-columns.is-layout-flex){gap: 2em;}.has-black-color{color: var(--wp--preset--color--black) !important;}.has-cyan-bluish-gray-color{color: var(--wp--preset--color--cyan-bluish-gray) !important;}.has-white-color{color: var(--wp--preset--color--white) !important;}.has-pale-pink-color{color: var(--wp--preset--color--pale-pink) !important;}.has-vivid-red-color{color: var(--wp--preset--color--vivid-red) !important;}.has-luminous-vivid-orange-color{color: var(--wp--preset--color--luminous-vivid-orange) !important;}.has-luminous-vivid-amber-color{color: var(--wp--preset--color--luminous-vivid-amber) !important;}.has-light-green-cyan-color{color: var(--wp--preset--color--light-green-cyan) !important;}.has-vivid-green-cyan-color{color: var(--wp--preset--color--vivid-green-cyan) !important;}.has-pale-cyan-blue-color{color: var(--wp--preset--color--pale-cyan-blue) !important;}.has-vivid-cyan-blue-color{color: var(--wp--preset--color--vivid-cyan-blue) !important;}.has-vivid-purple-color{color: var(--wp--preset--color--vivid-purple) !important;}.has-black-background-color{background-color: var(--wp--preset--color--black) !important;}.has-cyan-bluish-gray-background-color{background-color: var(--wp--preset--color--cyan-bluish-gray) !important;}.has-white-background-color{background-color: var(--wp--preset--color--white) !important;}.has-pale-pink-background-color{background-color: var(--wp--preset--color--pale-pink) !important;}.has-vivid-red-background-color{background-color: var(--wp--preset--color--vivid-red) !important;}.has-luminous-vivid-orange-background-color{background-color: var(--wp--preset--color--luminous-vivid-orange) !important;}.has-luminous-vivid-amber-background-color{background-color: var(--wp--preset--color--luminous-vivid-amber) !important;}.has-light-green-cyan-background-color{background-color: var(--wp--preset--color--light-green-cyan) !important;}.has-vivid-green-cyan-background-color{background-color: var(--wp--preset--color--vivid-green-cyan) !important;}.has-pale-cyan-blue-background-color{background-color: var(--wp--preset--color--pale-cyan-blue) !important;}.has-vivid-cyan-blue-background-color{background-color: var(--wp--preset--color--vivid-cyan-blue) !important;}.has-vivid-purple-background-color{background-color: var(--wp--preset--color--vivid-purple) !important;}.has-black-border-color{border-color: var(--wp--preset--color--black) !important;}.has-cyan-bluish-gray-border-color{border-color: var(--wp--preset--color--cyan-bluish-gray) !important;}.has-white-border-color{border-color: var(--wp--preset--color--white) !important;}.has-pale-pink-border-color{border-color: var(--wp--preset--color--pale-pink) !important;}.has-vivid-red-border-color{border-color: var(--wp--preset--color--vivid-red) !important;}.has-luminous-vivid-orange-border-color{border-color: var(--wp--preset--color--luminous-vivid-orange) !important;}.has-luminous-vivid-amber-border-color{border-color: var(--wp--preset--color--luminous-vivid-amber) !important;}.has-light-green-cyan-border-color{border-color: var(--wp--preset--color--light-green-cyan) !important;}.has-vivid-green-cyan-border-color{border-color: var(--wp--preset--color--vivid-green-cyan) !important;}.has-pale-cyan-blue-border-color{border-color: var(--wp--preset--color--pale-cyan-blue) !important;}.has-vivid-cyan-blue-border-color{border-color: var(--wp--preset--color--vivid-cyan-blue) !important;}.has-vivid-purple-border-color{border-color: var(--wp--preset--color--vivid-purple) !important;}.has-vivid-cyan-blue-to-vivid-purple-gradient-background{background: var(--wp--preset--gradient--vivid-cyan-blue-to-vivid-purple) !important;}.has-light-green-cyan-to-vivid-green-cyan-gradient-background{background: var(--wp--preset--gradient--light-green-cyan-to-vivid-green-cyan) !important;}.has-luminous-vivid-amber-to-luminous-vivid-orange-gradient-background{background: var(--wp--preset--gradient--luminous-vivid-amber-to-luminous-vivid-orange) !important;}.has-luminous-vivid-orange-to-vivid-red-gradient-background{background: var(--wp--preset--gradient--luminous-vivid-orange-to-vivid-red) !important;}.has-very-light-gray-to-cyan-bluish-gray-gradient-background{background: var(--wp--preset--gradient--very-light-gray-to-cyan-bluish-gray) !important;}.has-cool-to-warm-spectrum-gradient-background{background: var(--wp--preset--gradient--cool-to-warm-spectrum) !important;}.has-blush-light-purple-gradient-background{background: var(--wp--preset--gradient--blush-light-purple) !important;}.has-blush-bordeaux-gradient-background{background: var(--wp--preset--gradient--blush-bordeaux) !important;}.has-luminous-dusk-gradient-background{background: var(--wp--preset--gradient--luminous-dusk) !important;}.has-pale-ocean-gradient-background{background: var(--wp--preset--gradient--pale-ocean) !important;}.has-electric-grass-gradient-background{background: var(--wp--preset--gradient--electric-grass) !important;}.has-midnight-gradient-background{background: var(--wp--preset--gradient--midnight) !important;}.has-small-font-size{font-size: var(--wp--preset--font-size--small) !important;}.has-medium-font-size{font-size: var(--wp--preset--font-size--medium) !important;}.has-large-font-size{font-size: var(--wp--preset--font-size--large) !important;}.has-x-large-font-size{font-size: var(--wp--preset--font-size--x-large) !important;}
+.wp-block-navigation a:where(:not(.wp-element-button)){color: inherit;}
+:where(.wp-block-columns.is-layout-flex){gap: 2em;}
+.wp-block-pullquote{font-size: 1.5em;line-height: 1.6;}</style>
+<link rel="stylesheet" id="parent-style-css" href="/wp-content/themes/twentytwelve/style.css" type="text/css" media="all">
+<link rel="stylesheet" id="twentytwelve-fonts-css" href="https://fonts.googleapis.com/css?family=Open+Sans%3A400italic%2C700italic%2C400%2C700&#038;subset=latin%2Clatin-ext&#038;display=fallback" type="text/css" media="all">
+<link rel="stylesheet" id="twentytwelve-style-css" href="/wp-content/themes/twentytwelve-child/style.css?ver=20221101" type="text/css" media="all">
+<link rel="stylesheet" id="twentytwelve-block-style-css" href="/wp-content/themes/twentytwelve/css/blocks.css?ver=20190406" type="text/css" media="all">
+<!--[if lt IE 9]>
+<link rel='stylesheet' id='twentytwelve-ie-css' href='https://mendo.pt/wp-content/themes/twentytwelve/css/ie.css?ver=20150214' type='text/css' media='all' />
+<![endif]-->
+<script type="text/javascript" src="/wp-includes/js/jquery/jquery.min.js?ver=3.6.1" id="jquery-core-js"></script>
+<script type="text/javascript" src="/wp-includes/js/jquery/jquery-migrate.min.js?ver=3.3.2" id="jquery-migrate-js"></script>
+<link rel="https://api.w.org/" href="/wp-json/">
+<link rel="alternate" type="application/json" href="/wp-json/wp/v2/categories/19">
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="/xmlrpc.php?rsd">
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="/wp-includes/wlwmanifest.xml">
+<!-- Analytics by WP Statistics v13.2.14 - https://wp-statistics.com/ -->
+</head>
+
+<body class="archive category category-hardening category-19 wp-embed-responsive custom-font-enabled single-author">
+<svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 0 0" width="0" height="0" focusable="false" role="none" style="visibility: hidden; position: absolute; left: -9999px; overflow: hidden;"><defs><filter id="wp-duotone-dark-grayscale"><fecolormatrix color-interpolation-filters="sRGB" type="matrix" values=" .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 "></fecolormatrix><fecomponenttransfer color-interpolation-filters="sRGB"><fefuncr type="table" tablevalues="0 0.49803921568627"></fefuncr><fefuncg type="table" tablevalues="0 0.49803921568627"></fefuncg><fefuncb type="table" tablevalues="0 0.49803921568627"></fefuncb><fefunca type="table" tablevalues="1 1"></fefunca></fecomponenttransfer><fecomposite in2="SourceGraphic" operator="in"></fecomposite></filter></defs></svg><svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 0 0" width="0" height="0" focusable="false" role="none" style="visibility: hidden; position: absolute; left: -9999px; overflow: hidden;"><defs><filter id="wp-duotone-grayscale"><fecolormatrix color-interpolation-filters="sRGB" type="matrix" values=" .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 "></fecolormatrix><fecomponenttransfer color-interpolation-filters="sRGB"><fefuncr type="table" tablevalues="0 1"></fefuncr><fefuncg type="table" tablevalues="0 1"></fefuncg><fefuncb type="table" tablevalues="0 1"></fefuncb><fefunca type="table" tablevalues="1 1"></fefunca></fecomponenttransfer><fecomposite in2="SourceGraphic" operator="in"></fecomposite></filter></defs></svg><svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 0 0" width="0" height="0" focusable="false" role="none" style="visibility: hidden; position: absolute; left: -9999px; overflow: hidden;"><defs><filter id="wp-duotone-purple-yellow"><fecolormatrix color-interpolation-filters="sRGB" type="matrix" values=" .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 "></fecolormatrix><fecomponenttransfer color-interpolation-filters="sRGB"><fefuncr type="table" tablevalues="0.54901960784314 0.98823529411765"></fefuncr><fefuncg type="table" tablevalues="0 1"></fefuncg><fefuncb type="table" tablevalues="0.71764705882353 0.25490196078431"></fefuncb><fefunca type="table" tablevalues="1 1"></fefunca></fecomponenttransfer><fecomposite in2="SourceGraphic" operator="in"></fecomposite></filter></defs></svg><svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 0 0" width="0" height="0" focusable="false" role="none" style="visibility: hidden; position: absolute; left: -9999px; overflow: hidden;"><defs><filter id="wp-duotone-blue-red"><fecolormatrix color-interpolation-filters="sRGB" type="matrix" values=" .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 "></fecolormatrix><fecomponenttransfer color-interpolation-filters="sRGB"><fefuncr type="table" tablevalues="0 1"></fefuncr><fefuncg type="table" tablevalues="0 0.27843137254902"></fefuncg><fefuncb type="table" tablevalues="0.5921568627451 0.27843137254902"></fefuncb><fefunca type="table" tablevalues="1 1"></fefunca></fecomponenttransfer><fecomposite in2="SourceGraphic" operator="in"></fecomposite></filter></defs></svg><svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 0 0" width="0" height="0" focusable="false" role="none" style="visibility: hidden; position: absolute; left: -9999px; overflow: hidden;"><defs><filter id="wp-duotone-midnight"><fecolormatrix color-interpolation-filters="sRGB" type="matrix" values=" .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 "></fecolormatrix><fecomponenttransfer color-interpolation-filters="sRGB"><fefuncr type="table" tablevalues="0 0"></fefuncr><fefuncg type="table" tablevalues="0 0.64705882352941"></fefuncg><fefuncb type="table" tablevalues="0 1"></fefuncb><fefunca type="table" tablevalues="1 1"></fefunca></fecomponenttransfer><fecomposite in2="SourceGraphic" operator="in"></fecomposite></filter></defs></svg><svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 0 0" width="0" height="0" focusable="false" role="none" style="visibility: hidden; position: absolute; left: -9999px; overflow: hidden;"><defs><filter id="wp-duotone-magenta-yellow"><fecolormatrix color-interpolation-filters="sRGB" type="matrix" values=" .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 "></fecolormatrix><fecomponenttransfer color-interpolation-filters="sRGB"><fefuncr type="table" tablevalues="0.78039215686275 1"></fefuncr><fefuncg type="table" tablevalues="0 0.94901960784314"></fefuncg><fefuncb type="table" tablevalues="0.35294117647059 0.47058823529412"></fefuncb><fefunca type="table" tablevalues="1 1"></fefunca></fecomponenttransfer><fecomposite in2="SourceGraphic" operator="in"></fecomposite></filter></defs></svg><svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 0 0" width="0" height="0" focusable="false" role="none" style="visibility: hidden; position: absolute; left: -9999px; overflow: hidden;"><defs><filter id="wp-duotone-purple-green"><fecolormatrix color-interpolation-filters="sRGB" type="matrix" values=" .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 "></fecolormatrix><fecomponenttransfer color-interpolation-filters="sRGB"><fefuncr type="table" tablevalues="0.65098039215686 0.40392156862745"></fefuncr><fefuncg type="table" tablevalues="0 1"></fefuncg><fefuncb type="table" tablevalues="0.44705882352941 0.4"></fefuncb><fefunca type="table" tablevalues="1 1"></fefunca></fecomponenttransfer><fecomposite in2="SourceGraphic" operator="in"></fecomposite></filter></defs></svg><svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 0 0" width="0" height="0" focusable="false" role="none" style="visibility: hidden; position: absolute; left: -9999px; overflow: hidden;"><defs><filter id="wp-duotone-blue-orange"><fecolormatrix color-interpolation-filters="sRGB" type="matrix" values=" .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 "></fecolormatrix><fecomponenttransfer color-interpolation-filters="sRGB"><fefuncr type="table" tablevalues="0.098039215686275 1"></fefuncr><fefuncg type="table" tablevalues="0 0.66274509803922"></fefuncg><fefuncb type="table" tablevalues="0.84705882352941 0.41960784313725"></fefuncb><fefunca type="table" tablevalues="1 1"></fefunca></fecomponenttransfer><fecomposite in2="SourceGraphic" operator="in"></fecomposite></filter></defs></svg><div id="page" class="hfeed site">
+	<header id="masthead" class="site-header">
+		<hgroup>
+			<h1 class="site-title"><a href="/" title="Secure Batatas" rel="home">Secure Batatas</a></h1>
+			<h2 class="site-description">Batatas is my foobar. Security.</h2>
+		</hgroup>
+
+		<nav id="site-navigation" class="main-navigation">
+			<button class="menu-toggle">Menu</button>
+			<a class="assistive-text" href="#content" title="Skip to content">Skip to content</a>
+			<div class="nav-menu"><ul>
+<li><a href="/">Home</a></li>
+<li class="page_item page-item-9"><a href="/about/">About</a></li>
+<li class="page_item page-item-138"><a href="/code/">Code</a></li>
+</ul></div>
+		</nav><!-- #site-navigation -->
+
+				<a href="/"><img src="/wp-content/uploads/2014/12/potatoes.jpg" class="header-image" width="965" height="250" alt="Secure Batatas"></a>
+			</header><!-- #masthead -->
+
+	<div id="main" class="wrapper">
+
+	<section id="primary" class="site-content">
+		<div id="content" role="main">
+
+					<header class="archive-header">
+				<h1 class="archive-title">
+				Category Archives: <span>hardening</span>				</h1>
+
+						</header><!-- .archive-header -->
+
+			
+	<article id="post-27" class="post-27 post type-post status-publish format-standard hentry category-hardening category-web-security category-wordpress tag-hardening tag-wordpress">
+				<header class="entry-header">
+			
+						<h1 class="entry-title">
+				<a href="/hardening-wordpress/" rel="bookmark">Hardening WordPress</a>
+			</h1>
+										<div class="comments-link">
+					<a href="/hardening-wordpress/#respond"><span class="leave-reply">Leave a reply</span></a>				</div>
+<!-- .comments-link -->
+					</header><!-- .entry-header -->
+
+				<div class="entry-content">
+			<p>I think it makes sense that the very first post on my brand new WordPress blog would be about hardening WordPress itself. This makes even more sense if you consider it took me more time to harden this blog than to write this post.</p>
+<p>For the installation just follow the official documentation found <a href="http://codex.wordpress.org/Installing_WordPress">here</a> to which I just want to make one remark about the database password strength: </p>
+<p><code>GRANT ALL PRIVILEGES ON databasename.* TO "wordpressusername"@"hostname" IDENTIFIED BY "password";</code></p>
+<p>Use a long password here, something like ﻿sK8ytB8mR5PtxqqTmCEYThEUJS5J6D which is 30 chars long. You won&#8217;t need to type this password often so there is no need to use a memorable one.<br>
+To be honest, a weak password here wouldn&#8217;t be that bad since it is unlikely that you server will fall because of this&#8230;unless you expose it beyond 127.0.0.1.</p>
+<p>For the hardening, start <a href="http://codex.wordpress.org/Hardening_WordPress">here</a>. There is some smalltalk but there are also some good advices regarding a few topics:    </p>
+<ul>
+<li>updates</li>
+<li>file permissions</li>
+<li>wp-admin</li>
+<li>wp-includes</li>
+<li>security plugins</li>
+</ul>
+<p><strong>updates</strong><br>
+Keeping your installation up to date is paramount to ensure proper security. Before version 3.7 updates really sucked because the easiest way to (automatically) update was to have all files writable by the webserver process, so basically any malicious code executed by the webserver would be able to overwrite any file from our installation. The alternative was more secure but harder, so people wouldn&#8217;t update.<br>
+In the latest versions there is some magic that let you have automatic updates without the need to have files writable by the webserver. I think there is more than one way to achieve this: I went for the SSH one.<br>
+I followed this <a href="https://www.digitalocean.com/community/tutorials/how-to-configure-secure-updates-and-installations-in-wordpress-on-ubuntu">tutorial</a>. In addition to the 5 defines added to the wp-config.php file, I also added <code>define('FS_METHOD', 'ssh2');</code>.<br>
+Since we are adding a new SSH user and we don&#8217;t want to increase your attack surface, disable password authentication for SSH at /etc/ssh/sshd_config with <code>PasswordAuthentication no</code>. Well&#8230;you should always disable password authentication for SSH. </p>
+<p><strong>file permissions</strong><br>
+The important thing here is to prevent the webserver from writing files. There are some exceptions, as you might want to allow functionality such as image upload (so I can haz pretty potatoes pic).<br>
+You can have all files with owner and group wp-user, everything with 644 (files) or 755 (diretories).<br>
+The exception is wp-content/uploads that must be writable by the group (775) and have the group www-data set. You don&#8217;t need to allow webserver writing for the others since updates and installations are done through SSH and run with wp-user.</p>
+<p><strong>wp-admin</strong><br>
+/wp-admin is a prime target for attackers because that is where you login to administrate your blog with your admin username and your weak password :)<br>
+Leaving /wp-admin world accessible exposes you to two problems: credential bruteforce/reuse/theft and direct access to files that may have all sort of vulnerabilities.<br>
+The most practical way to protect you from these is require some sort of authentication, say basic authentication. With nginx you just need to add this to your virtual host<br>
+<code><br>
+        location = /wp-admin {<br>
+                auth_basic "Restricted";<br>
+                auth_basic_user_file /path/to/your/htpasswd;<br>
+        }</code></p>
+<p>and define the username and password. Please use a strong password here and also for your /wp-admin accounts.</p>
+<blockquote>
+<p><code><strong>EDIT</strong></code><br>
+Also protect the /wp-login.php since it is used to login to edit the blog.<br>
+I include the snippet below to demonstrate the care you must take with nginx locations while configuring the rules described in this blog. Without going into details, prefix matching has precedence over regexp matching and nested locations with regex must have only regex inside.<br>
+<code> location = /wp-admin {<br>
+                auth_basic "Restricted";<br>
+                auth_basic_user_file /etc/nginx/htpasswd;<br>
+        }</code></p>
+<p>        location ~ \.php$ {<br>
+                location ~* /wp-login.php {<br>
+                        auth_basic "Restricted login";<br>
+                        auth_basic_user_file /etc/nginx/htpasswd;<br>
+                }</p>
+<p>                location ~* wp-config.php {<br>
+                        deny all;<br>
+                }<br>
+</p>
+</blockquote>
+<p><strong>security plugins</strong><br>
+Having many plugins installed is asking for trouble since many have vulnerabilities and don&#8217;t even get fixed. So, going against the usual recommendation of not installing plugins, install the Sucuri Security &#8211; Auditing, Malware Scanner and Hardening plugin.<br>
+After installing, you get a Sucuri Security button on your dashboard side menu that lets you access the plugin dashboard<br>
+<a href="/wp-content/uploads/2015/01/Screen-Shot-2015-01-03-at-17.48.34.png"><img decoding="async" src="/wp-content/uploads/2015/01/Screen-Shot-2015-01-03-at-17.48.34.png" alt="Sucuri Security menu" width="880" height="238" class="alignnone size-full wp-image-55"></a></p>
+<p>Some of the features are paid, but you get a few nice things for free. In the hardening tab you can verify if have the proper secure configurations, however some only work if you are using Apache. More specifically, &#8220;Protect uploads directory&#8221;, &#8220;Restrict wp-content access&#8221; and &#8220;Restrict wp-includes access&#8221; will remain red under nginx even if properly configured, because the plugin expects Apache specific configuration.<br>
+In the Settings tab you have another interesting feature: the scanner. The plugin can scan your wordpress installation for changes and notify you by email, like an HIDS. Go through the Settings tabs and activate/deactivate options as you please.</p>
+<p>Additionally to the 5 previous topics, I recommend following this extra 2:</p>
+<p><strong>Delete themes</strong><br>
+Regarding themes&#8230;you just use one so delete those you don&#8217;t use, as well as the pre-installed useless plugin <a href="https://wordpress.org/plugins/hello-dolly/">Hello Dolly</a>.</p>
+<p><strong>Limit PHP execution</strong><br>
+Direct access to PHP files laying around in your installation are known to cause problem, so disable PHP execution wherever you can. If using nginx add the configuration below to your virtual host. For Apache just use the Sucuri plugin or use Google.</p>
+<p>       <code> location ~* wp-config.php {<br>
+                deny all;<br>
+        }</code></p>
+<p>        location ~* wp-content/(.*)\.php$ {<br>
+                deny all;<br>
+        }</p>
+<p>        location ~* wp-includes/(.*)\.php$ {<br>
+                deny all;<br>
+        }</p>
+<p>        location ~* wp-includes/uploads/sucuri$ {<br>
+                deny all;<br>
+        }</p>
+<p>And finally&#8230;<strong>HTTPS</strong><br>
+I don&#8217; need extra motivation to make my blog available only by HTTPS but you if you are thinking twice, just remember Google favors HTTPS sites in the search results and you can get certificates for free from <a href="https://www.startssl.com/">StartSSL</a>, for instance.<br>
+Configuring HTTPS for WordPress is just like doing it for any another virtual host. Just remember a few things:</p>
+<ul>
+<li>change your site from http://example.com to http<strong>s</strong>://example.com at Settings->General->WordPress Address and Site Address</li>
+<li>force a 301 redirect from HTTP to HTTPS</li>
+<li>send a HSTS header to ensure you are always under HTTPS</li>
+<li>disable all SSL versions and enable only TLS</li>
+<li>enable strong ciphers such as <code>ECDHE-RSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-SHA256:ECDHE-RSA-RC4-SHA:RC4:HIGH:!MD5:!aNULL:!EDH</code>
+</li>
+<li>enable server cipher preference</li>
+</ul>
+<p>Then, go to <a href="https://www.ssllabs.com/ssltest/">SSL Labs</a> and test your configuration.</p>
+<p>If you are paranoid, you can continue hardening your WordPress, webserver, PHP, and OS forever, but you have to balance that against the time you have available.</p>
+<p>So..I guess I have an WordPress blog. Lets see how long it holds without being hacked&#8230;</p>
+					</div>
+<!-- .entry-content -->
+		
+		<footer class="entry-meta">
+			This entry was posted in <a href="/category/hardening/" rel="category tag">hardening</a>, <a href="/category/web-security/" rel="category tag">web security</a>, <a href="/category/wordpress/" rel="category tag">wordpress</a> and tagged <a href="/tag/hardening/" rel="tag">hardening</a>, <a href="/tag/wordpress/" rel="tag">wordpress</a> on <a href="/hardening-wordpress/" title="18:56" rel="bookmark"><time class="entry-date" datetime="2015-01-03T18:56:19+01:00">January 3, 2015</time></a><span class="by-author"> by <span class="author vcard"><a class="url fn n" href="/author/tmendo/" title="View all posts by tmendo" rel="author">tmendo</a></span></span>.								</footer><!-- .entry-meta -->
+	</article><!-- #post -->
+
+		
+		</div>
+<!-- #content -->
+	</section><!-- #primary -->
+
+
+			<div id="secondary" class="widget-area" role="complementary">
+			
+		<aside id="recent-posts-2" class="widget widget_recent_entries">
+		<h3 class="widget-title">Recent Posts</h3>
+		<ul>
+											<li>
+					<a href="/testing-uploads-with-burp-intruder-updated/">Testing uploads with Burp Intruder &#8211; Updated</a>
+									</li>
+											<li>
+					<a href="/testing-uploads-with-burp-intruder/">Testing uploads with Burp Intruder</a>
+									</li>
+											<li>
+					<a href="/ocsp-stapling/">OCSP stapling</a>
+									</li>
+											<li>
+					<a href="/monitoring-pastebin/">Monitoring Pastebin</a>
+									</li>
+											<li>
+					<a href="/not-even-god-forgives-passwords-in-clear-text/">Not even God forgives passwords in clear text</a>
+									</li>
+					</ul>
+
+		</aside><aside id="search-2" class="widget widget_search"><form role="search" method="get" id="searchform" class="searchform" action="https://mendo.pt/">
+				<div>
+					<label class="screen-reader-text" for="s">Search for:</label>
+					<input type="text" value="" name="s" id="s">
+					<input type="submit" id="searchsubmit" value="Search">
+				</div>
+			</form></aside><aside id="categories-2" class="widget widget_categories"><h3 class="widget-title">Categories</h3>
+			<ul>
+					<li class="cat-item cat-item-34">
+<a href="/category/burp/">burp</a> (2)
+</li>
+	<li class="cat-item cat-item-17">
+<a href="/category/conference/">conference</a> (1)
+</li>
+	<li class="cat-item cat-item-35">
+<a href="/category/extension/">extension</a> (2)
+</li>
+	<li class="cat-item cat-item-19 current-cat">
+<a aria-current="page" href="/category/hardening/">hardening</a> (1)
+</li>
+	<li class="cat-item cat-item-21">
+<a href="/category/monitoring/">monitoring</a> (1)
+</li>
+	<li class="cat-item cat-item-28">
+<a href="/category/operations/">operations</a> (1)
+</li>
+	<li class="cat-item cat-item-13">
+<a href="/category/passwords/">passwords</a> (1)
+</li>
+	<li class="cat-item cat-item-20">
+<a href="/category/web-security/">web security</a> (4)
+</li>
+	<li class="cat-item cat-item-18">
+<a href="/category/wordpress/">wordpress</a> (1)
+</li>
+			</ul>
+
+			</aside><aside id="archives-2" class="widget widget_archive"><h3 class="widget-title">Archives</h3>
+			<ul>
+					<li><a href="/2015/09/">September 2015</a></li>
+	<li><a href="/2015/08/">August 2015</a></li>
+	<li><a href="/2015/05/">May 2015</a></li>
+	<li><a href="/2015/03/">March 2015</a></li>
+	<li><a href="/2015/01/">January 2015</a></li>
+			</ul>
+
+			</aside>		</div>
+<!-- #secondary -->
+		</div>
+<!-- #main .wrapper -->
+	<footer id="colophon" role="contentinfo">
+		<div class="site-info">
+									<a href="https://wordpress.org/" class="imprint" title="Semantic Personal Publishing Platform">
+				Proudly powered by WordPress			</a>
+		</div>
+<!-- .site-info -->
+	</footer><!-- #colophon -->
+</div>
+<!-- #page -->
+
+<script type="text/javascript" src="/wp-content/themes/twentytwelve/js/navigation.js?ver=20141205" id="twentytwelve-navigation-js"></script>
+</body>
+</html>

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>lisbon &#8211; Secure Batatas</title>
+	<atom:link href="/tag/lisbon/feed/?simply_static_page=164" rel="self" type="application/rss+xml" />
+	<link>/</link>
+	<description>Batatas is my foobar. Security.</description>
+	<lastBuildDate>Sat, 07 Mar 2015 22:23:50 +0000</lastBuildDate>
+	<language>en-US</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=</generator>
+	<item>
+		<title>B-Sides Lisbon is coming</title>
+		<link>/b-sides-lisbon-is-coming/</link>
+					<comments>/b-sides-lisbon-is-coming/#respond</comments>
+		
+		<dc:creator><![CDATA[tmendo]]></dc:creator>
+		<pubDate>Thu, 29 Jan 2015 22:23:03 +0000</pubDate>
+				<category><![CDATA[conference]]></category>
+		<category><![CDATA[b-sides]]></category>
+		<category><![CDATA[burp]]></category>
+		<category><![CDATA[lisbon]]></category>
+		<guid isPermaLink="false">/?p=83</guid>
+
+					<description><![CDATA[The second edition of B-Sides Lisbon is coming! This security conference is happening at the 3rd of July in Lisbon and its a whole day event with two tracks of talks and some good discussions. And it is free! The previous, and first edition, happened in 2013 and it was awesome. You can revisit the [&#8230;]]]></description>
+										<content:encoded><![CDATA[<p>The second edition of B-Sides Lisbon is coming! This security conference is happening at the 3rd of July in Lisbon and its a whole day event with two tracks of talks and some good discussions. And it is free!</p>
+<p><a href="/wp-content/uploads/2015/01/Screen-Shot-2015-01-29-at-21.39.40.png"><img decoding="async" loading="lazy" src="/wp-content/uploads/2015/01/Screen-Shot-2015-01-29-at-21.39.40.png" alt="Screen Shot 2015-01-29 at 21.39.40" width="286" height="239" class="alignnone size-full wp-image-87" /></a></p>
+<p>The previous, and first edition, happened in 2013 and it was awesome. You can revisit the program <a href="https://web.archive.org/web/20131007130544/http://www.bsideslisbon.org/?page_id=86" title="B-Sides Lisbon 2013 schedule archive" target="_blank">here</a> and search for the talks on Google (you will find some for sure).<br />
+With a quick search I found Bruno Morisson&#8217;s preso:</p>
+<p><iframe loading="lazy" src="//www.slideshare.net/slideshow/embed_code/24105478" width="425" height="355" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:1px solid #CCC; border-width:1px; max-width: 100%;" allowfullscreen> </iframe><br />
+btw, he is also one of the organizers :)</p>
+<p>I also did a presentation on how to start using Burp Suite, including a few tips to use it more efficiently:</p>
+<p><iframe loading="lazy" src="//www.slideshare.net/slideshow/embed_code/26915928" width="425" height="355" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:1px solid #CCC; border-width:1px; margin-bottom:5px; max-width: 100%;" allowfullscreen> </iframe></p>
+<p>Now that you know this years edition will be even better, go ahead and submit a talk <a href="http://www.bsideslisbon.org/call-for-papers/" title="B-Sides Lisbon 2015 call for papers" target="_blank">here</a></p>
+]]></content:encoded>
+					
+					<wfw:commentRss>/b-sides-lisbon-is-coming/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+	</channel>
+</rss>

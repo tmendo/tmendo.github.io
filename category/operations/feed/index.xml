@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>operations &#8211; Secure Batatas</title>
+	<atom:link href="/category/operations/feed/?simply_static_page=110" rel="self" type="application/rss+xml" />
+	<link>/</link>
+	<description>Batatas is my foobar. Security.</description>
+	<lastBuildDate>Mon, 19 Oct 2015 17:17:07 +0000</lastBuildDate>
+	<language>en-US</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=</generator>
+	<item>
+		<title>OCSP stapling</title>
+		<link>/ocsp-stapling/</link>
+					<comments>/ocsp-stapling/#respond</comments>
+		
+		<dc:creator><![CDATA[tmendo]]></dc:creator>
+		<pubDate>Fri, 08 May 2015 22:35:32 +0000</pubDate>
+				<category><![CDATA[operations]]></category>
+		<category><![CDATA[web security]]></category>
+		<category><![CDATA[nginx]]></category>
+		<category><![CDATA[ocsp]]></category>
+		<category><![CDATA[ssl]]></category>
+		<category><![CDATA[stapling]]></category>
+		<category><![CDATA[tls]]></category>
+		<guid isPermaLink="false">/?p=190</guid>
+
+					<description><![CDATA[Tired of seeing wrong OCSP stapling configurations, even those made by me, I&#8217;m writing this so I won&#8217;t forget how to do it right..and hopefully aid others. This is also an excuse to read more about the subject :) OCSP stapling is good: you have one less connection to a server that has nothing to [&#8230;]]]></description>
+										<content:encoded><![CDATA[<p>Tired of seeing wrong OCSP stapling configurations, even those made by me, I&#8217;m writing this so I won&#8217;t forget how to do it right..and hopefully aid others. This is also an excuse to read more about the subject :)</p>
+<p>OCSP stapling is good: you have one less connection to a server that has nothing to do with the intended purpose of the original connection and still get an OCSP response. Sure, you have a few more bytes on every connection but it is harder for the attacker to interrupt the OCSP process without interfering with the target server itself.</p>
+<p>For nginx, you need to use a configuration at least with these directives:<br />
+<code><br />
+ssl_stapling on;<br />
+ssl_stapling_verify on;<br />
+ssl_trusted_certificate /etc/nginx/certs/bundle_with_root_stapling.pem;<br />
+</code></p>
+<p><strong>ssl_stapling on;</strong> enables stapling. To be honest, you can make stapling work only with this line.</p>
+<p><strong>ssl_stapling_verify on;</strong> this forces our server to check if the OCSP response is valid, meaning properly signed by the respective CA. </p>
+<p><strong>ssl_trusted_certificate /etc/nginx/certs/bundle_with_root_stapling.pem;</strong> path to the chain that validates the responses. If you enabled ssl_stapling_verify you need this directive. It must have all the intermediates CAs, including the root. Just concatenate every CA in the chain, PEM encoded, with the root in the end.</p>
+<p>Then just issue <code>sudo service nginx restart</code> and test it. You can test it with <code>echo | openssl s_client -connect mendo.pt:443 -status</code></p>
+<p>You will likely get something like<br />
+<code>OCSP response: no response sent</code></p>
+<p>This happens because nginx will not prefetch a valid response until it gets a connection, so the first connection won&#8217;t receive an OCSP response. Try again after a few seconds and you will get<br />
+<code><br />
+OCSP response:<br />
+======================================<br />
+OCSP Response Data:<br />
+    OCSP Response Status: successful (0x0)<br />
+    Response Type: Basic OCSP Response<br />
+    Version: 1 (0x0)<br />
+    Responder Id: C = IL, O = StartCom Ltd. (Start Commercial Limited), CN = StartCom Class 1 Server OCSP Signer<br />
+    Produced At: May  8 20:48:21 2015 GMT<br />
+    Responses:<br />
+    Certificate ID:<br />
+      Hash Algorithm: sha1<br />
+      Issuer Name Hash: 6568874F40750F016A3475625E1F5C93E5A26D58<br />
+      Issuer Key Hash: EB4234D098B0AB9FF41B6B08F7CC642EEF0E2C45<br />
+      Serial Number: 05A143427C3754<br />
+    Cert Status: good<br />
+    This Update: May  8 20:48:21 2015 GMT<br />
+    Next Update: May 10 20:48:21 2015 GMT</p>
+<p>    Signature Algorithm: sha1WithRSAEncryption<br />
+         98:47:f1:39:4b:ef:f6:67:3d:46:d4:3c:93:fc:ab:95:20:a3:<br />
+         e8:d0:2b:64:63:d8:46:d7:65:3f:00:5d:50:9c:7d:b7:2c:4c:<br />
+         36:b1:58:86:9f:4b:95:d4:a4:fa:0f:bb:50:3b:a3:e8:d2:a6:<br />
+         f3:5f:8c:c3:62:b1:75:90:8a:ab:50:cd:33:6a:cc:6c:ea:04:<br />
+         a5:65:ff:09:15:41:0c:76:98:7a:79:93:f4:e1:8b:a5:a1:0c:<br />
+         1e:90:04:25:05:98:91:2c:cc:62:0a:2b:06:a3:28:46:55:90:<br />
+         f3:0f:09:3c:57:51:98:ed:9c:6f:03:f6:01:9e:d5:61:1b:cf:<br />
+         f2:7a:0b:f2:9d:e1:52:ba:4a:34:ba:5c:95:7b:40:de:83:96:<br />
+         55:d0:df:41:e7:14:58:28:9b:6a:67:67:fc:db:59:ab:8a:35:<br />
+         90:a9:75:8b:9e:8b:46:51:0c:e9:8c:4e:43:60:34:f7:86:06:<br />
+         09:0b:5f:03:16:b7:ab:15:49:ea:15:c4:f7:c6:d0:ec:22:01:<br />
+         fd:8a:f1:d0:b9:f5:12:14:b7:13:5b:13:80:a6:60:be:11:bc:<br />
+         28:c8:86:44:4b:1f:dd:fc:1e:5a:2e:a0:21:52:8d:c7:6c:e5:<br />
+         72:c0:11:f4:15:16:54:96:14:f7:5f:5a:3f:cf:46:10:60:f5:<br />
+         46:15:0a:8b<br />
+</code></p>
+<p>Simple.</p>
+<blockquote><p><code><strong>EDIT</strong></code><br />
+Because nginx will only resolve the OCSP hostname at startup and its IP can change, you might consider setting the following directive (pick you DNS resolver):</p>
+<p><strong>resolver 8.8.8.8;</strong>
+</p></blockquote>
+]]></content:encoded>
+					
+					<wfw:commentRss>/ocsp-stapling/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+	</channel>
+</rss>

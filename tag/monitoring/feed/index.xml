@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>monitoring &#8211; Secure Batatas</title>
+	<atom:link href="/tag/monitoring/feed/?simply_static_page=128" rel="self" type="application/rss+xml" />
+	<link>/</link>
+	<description>Batatas is my foobar. Security.</description>
+	<lastBuildDate>Mon, 30 Mar 2015 18:03:17 +0000</lastBuildDate>
+	<language>en-US</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=</generator>
+	<item>
+		<title>Monitoring Pastebin</title>
+		<link>/monitoring-pastebin/</link>
+					<comments>/monitoring-pastebin/#respond</comments>
+		
+		<dc:creator><![CDATA[tmendo]]></dc:creator>
+		<pubDate>Mon, 30 Mar 2015 09:34:28 +0000</pubDate>
+				<category><![CDATA[monitoring]]></category>
+		<category><![CDATA[delegate]]></category>
+		<category><![CDATA[password]]></category>
+		<category><![CDATA[password dump]]></category>
+		<category><![CDATA[pastebin]]></category>
+		<category><![CDATA[pastes]]></category>
+		<category><![CDATA[tor]]></category>
+		<guid isPermaLink="false">/?p=140</guid>
+
+					<description><![CDATA[Suppose you want to monitor the Internet for certain keywords such as your username, email or some text pattern relevant for you or your company. A good starting point is to monitor Pastebin for those keywords, since that is where most of the interesting stuff gets dumped. What I wanted was simple: detect new pastes [&#8230;]]]></description>
+										<content:encoded><![CDATA[<p>Suppose you want to monitor the Internet for certain keywords such as your username, email or some text pattern relevant for you or your company. A good starting point is to monitor <a href="http://pastebin.com/" title="Pastebin" target="_blank">Pastebin</a> for those keywords, since that is where most of the interesting stuff gets dumped.</p>
+<p>What I wanted was simple:</p>
+<ul>
+<li>detect new pastes that match a given pattern</li>
+<li>save matching pastes</li>
+<li>do some processing on those pastes</li>
+<li>notify me with the results</li>
+</ul>
+<p>You can register alarms on Pastebin for up to 3 keywords and get notified upon matching, but you cannot use regular expressions or exclude keywords. Also, mail notifications are not the easiest to handle automatically.</p>
+<p>The classical choice was to use <a href="https://github.com/xme/pastemon" title="Pastemon" target="_blank">Pastemon</a>, maybe the first software of its kind. I had two problems with it: it would not save pastes to file and it was no longer maintained.<br />
+Searching for alternatives I found <a href="https://github.com/cvandeplas/pystemon" title="Pystemon" target="_blank">Pystemon</a>, a newer and improved version of Pastemon.</p>
+<p>So I ended up building the following setup:</p>
+<p>1. setup Pystemon to download and store any pastes that match my rules.</p>
+<ol>
+<li>get (my version of) Pystemon <code>git clone https://github.com/tmendo/pystemon.git</code></li>
+<li>edit pystemon.yaml</li>
+<li style="margin-left:60px;">set the archive dir</li>
+<li style="margin-left:60px;">enable and configure email alerts</li>
+<li style="margin-left:60px;">enable the use proxy option</li>
+<li style="margin-left:60px;">define some search patterns, for instance</li>
+<p><code></p>
+<pre>
+ - search: '[^a-zA-Z0-9]example\.(com|org)'
+   description: 'example domains'
+ - search: 'tmendo'
+   description: 'tmendo'
+   exclude: 'tmendoza'
+</pre>
+<p></code>
+</p>
+<li>run it with <code>python pystemon.py -v -c pystemon.yaml</code></li>
+</ol>
+<p>A few mistakes and Pastebin blocked my IP. Later they unblocked it and told me the threshold to stay safe, but in the meantime I have decided to proxy the requests through TOR. Since TOR only exposes a SOCKS proxy and Pystemon only supports HTTP proxies I used DeleGate.<br />
+Pystemon was originally designed to cycle through multiple proxies removing those that fail. I needed it to stick with the TOR proxy even if it eventually failed sometimes, so I forked the project, added support for a single proxy without removals, fixed some TODOs, included a few fixes from another committer, and did a pull request.</p>
+<p>2. setup <a href="http://www.delegate.org/delegate/" title="DeleGate" target="_blank">DeleGate</a> to convert an SOCKS proxy to an HTTP proxy<br />
+Because TOR exposes a SOCKS proxy and Pystemon only supports HTTP proxy I am running DeleGate to pass requests between them.</p>
+<ol>
+<li>download the <a href="http://delegate.hpcc.jp/anonftp/DeleGate/delegate9.9.13.tar.gz" target="_blank">source</a></li>
+<li><code>tar zxvf delegate9.9.13.tar.gz</code></li>
+<li><code>make</code></li>
+<li>create dg.conf<br />
+<code></p>
+<pre>
+-P127.0.0.1:8080
+-Tx
+-fv
+SOCKS=127.0.0.1:9050
+DGROOT="/path/to/delegate/"
+SERVER=http
+REMITTABLE="http,https/443"
+CACHE=no
+TIMEOUT="shutout:30m"
+MAXIMA="randstack:32"
+MAXIMA="randenv:1024"
+MAXIMA="randfd:32"
+ADMIN=your.email@example.com
+</pre>
+<p></code></li>
+<li>execute with <code>/path/to/delegated +=/path/to/delegate/dg.conf</code></li>
+</ol>
+<p>3. setup <a href="https://www.torproject.org/" title="TOR" target="_blank">TOR</a> following these <a href="https://www.torproject.org/docs/debian.html.en#ubuntu" title="TOR" target="_blank">instructions</a>.<br />
+This will install and start the daemon with the default configuration that generates new circuits every 10 minutes (you get a new IP every 10 minutes, at least). Pastebin does not discriminate TOR exit nodes, not sure about the other paste sites.</p>
+<p>Test the DeleGate and TOR combination:</p>
+<p><code></p>
+<pre>
+telnet localhost 8080
+Trying 127.0.0.1...
+Connected to localhost.
+Escape character is '^]'.
+GET / HTTP/1.1
+host: mendo.pt
+
+HTTP/1.1 301 Moved Permanently
+DeleGate-Ver: 9.9.13 (delay=9)
+Server: nginx
+Date: Fri, 27 Mar 2015 14:38:04 GMT
+Content-Type: text/html
+Location: /
+Strict-Transport-Security: max-age=31536000; includeSubDomains
+Via: 1.1 - (DeleGate/9.9.13)
+Connection: close
+Content-Length: 178
+</pre>
+<p></code><br />
+profit!</p>
+<p>4. setup a script that parses the stored pastes and do something useful.<br />
+You can use inotifywait to detect new pastes downloaded by Pystemon and do whatever you like with them (run it in a sandbox, do some further string matching, etc.)<br />
+<code></p>
+<pre>#!/bin/bash
+
+is_dir_pattern=\\bISDIR\\b
+
+inotifywait -r -m /path/to/pystemon/output -e close_write |
+    while read path action file; do
+        ﻿if [[ ! "$action" =~ $is_dir_pattern ]]; then
+            ﻿echo "The file '$file' appeared in directory '$path' via '$action'"
+	    ﻿# process $path/$file
+            ﻿# notify me of some finding
+        fi
+    done</pre>
+<p></code></p>
+<blockquote><p><code><strong>EDIT</strong></code><br />
+Listening to create and moved_to events might result in you being warned of a new file before its contents are written so you would end up with an empty file to process. Use close_write instead.
+</p></blockquote>
+<p>And thats it. Put everything under <a href="http://cr.yp.to/daemontools.html" title="Daemontools" target="_blank">DJB Daemontools</a> and you are able to monitor some paste sites for whatever you like and whatever reason.</p>
+]]></content:encoded>
+					
+					<wfw:commentRss>/monitoring-pastebin/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+	</channel>
+</rss>

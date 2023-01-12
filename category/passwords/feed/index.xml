@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>passwords &#8211; Secure Batatas</title>
+	<atom:link href="/category/passwords/feed/?simply_static_page=142" rel="self" type="application/rss+xml" />
+	<link>/</link>
+	<description>Batatas is my foobar. Security.</description>
+	<lastBuildDate>Sat, 07 Mar 2015 22:23:00 +0000</lastBuildDate>
+	<language>en-US</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=</generator>
+	<item>
+		<title>Not even God forgives passwords in clear text</title>
+		<link>/not-even-god-forgives-passwords-in-clear-text/</link>
+					<comments>/not-even-god-forgives-passwords-in-clear-text/#respond</comments>
+		
+		<dc:creator><![CDATA[tmendo]]></dc:creator>
+		<pubDate>Sat, 07 Mar 2015 22:23:00 +0000</pubDate>
+				<category><![CDATA[passwords]]></category>
+		<category><![CDATA[clear text]]></category>
+		<category><![CDATA[cleartext]]></category>
+		<category><![CDATA[hash]]></category>
+		<category><![CDATA[owasp]]></category>
+		<category><![CDATA[password]]></category>
+		<category><![CDATA[pbkdf2]]></category>
+		<category><![CDATA[storage]]></category>
+		<guid isPermaLink="false">/?p=106</guid>
+
+					<description><![CDATA[I think this comic from CommitStrip says it all: Passwords stored in clear text are half of the recipe to scary headlines such as &#8220;thousands of accounts published online by hackers&#8221;. To complete the recipe just add a single SQL injection or a good path traversal/LFI mix. Mature and trained developers rarely make such mistake, [&#8230;]]]></description>
+										<content:encoded><![CDATA[<p>I think this comic from <a href="http://www.commitstrip.com/" title="CommitStrip">CommitStrip</a> says it all:<br />
+<a href="http://www.commitstrip.com/en/2015/03/06/welcome-to-the-house-of-code/"><img decoding="async" loading="lazy" src="/wp-content/uploads/2015/03/Strip-Confession-650-finalenglish.jpg" alt="CommitStrip clear text passwords" width="650" height="899" class="size-full wp-image-130" /></a></p>
+<p>Passwords stored in clear text are half of the recipe to scary headlines such as &#8220;thousands of accounts published online by hackers&#8221;. To complete the recipe just add a single SQL injection or a good path traversal/LFI mix.</p>
+<p>Mature and trained developers rarely make such mistake, why? Because they had training and understand the consequences. The problem is the others, which need to be self-taught.</p>
+<p>So let me be very clear:</p>
+<ul>
+<li>you don&#8217;t need passwords in clear text to compare against the ones from login</li>
+<li>you can compare representations of them, lets say an hash</li>
+<li>never store or log passwords</li>
+</ul>
+<p>Regarding the storing itself, there are way too many options [1]. I will recommend just one, which is adequate for most situations (if you feel this does not fits you, please contact the nearest security guy, or leave a comment):</p>
+<p><code>function store(password)<br />
+&nbsp;&nbsp;&nbsp;&nbsp;salt = secureRandom(32bits)<br />
+&nbsp;&nbsp;&nbsp;&nbsp;hash = pbkdf2(salt, password, 10000)</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;storeAtDB(salt;hash)<br />
+end</p>
+<p>function validate(user, password)<br />
+&nbsp;&nbsp;&nbsp;&nbsp;salt,hash = getUserFromDB(user).split(;)<br />
+&nbsp;&nbsp;&nbsp;&nbsp;login_hash = pbkdf2(salt, password, 10000)</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;if (login_hash XOR hash == 0 )<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return true<br />
+&nbsp;&nbsp;&nbsp;&nbsp;else<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return false<br />
+end</p>
+<p></code></p>
+<p>I won&#8217;t explain these in detail, but the basic idea is to store an hash of the password plus a salt. No, it is not easy to find out the password given an hash + salt. No, it won&#8217;t slow down your application. Yes, you will be much, much safer.</p>
+<p>[1] <a href="https://www.owasp.org/index.php/Password_Storage_Cheat_Sheet" title="OWASP Password Storage Cheat Sheet" target="_blank">https://www.owasp.org/index.php/Password_Storage_Cheat_Sheet</a></p>
+]]></content:encoded>
+					
+					<wfw:commentRss>/not-even-god-forgives-passwords-in-clear-text/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+	</channel>
+</rss>
